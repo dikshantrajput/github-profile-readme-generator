@@ -11,7 +11,6 @@ async function createEnhancedUserProfileTemplate(
   try {
     const userProfile = await githubUserIntegration.getUserProfile();
     const repos = await githubRepoIntegration.getRepos();
-    const orgs = await githubUserIntegration.getUserOrgs();
 
     // Calculate statistics
     const totalStars = repos.reduce(
@@ -63,11 +62,6 @@ async function createEnhancedUserProfileTemplate(
   <img src="https://custom-icon-badges.demolab.com/badge/-${repos.length}%20Repositories-2962FF?style=for-the-badge&logoColor=white&logo=repo"/>
   <img src="https://custom-icon-badges.demolab.com/badge/-${totalStars}%20Stars-FFB000?style=for-the-badge&logoColor=white&logo=star"/>
   <img src="https://custom-icon-badges.demolab.com/badge/-${totalForks}%20Forks-FF4B4B?style=for-the-badge&logoColor=white&logo=fork"/>
-  ${
-      orgs.length
-        ? `<img src="https://custom-icon-badges.demolab.com/badge/-${orgs.length}%20Organizations-2ea043?style=for-the-badge&logoColor=white&logo=organization"/>`
-        : ""
-    }
 </div>
 
 <br/>

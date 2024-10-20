@@ -1,10 +1,14 @@
-import { GITHUB_TOKEN } from "$env/static/private";
 import { createEnhancedUserProfileTemplate } from "$lib/readme-templates/template1";
 import GithubIntegrationFactory from "$lib/server/integrations/git/github/github.factory";
-import { json, type RequestHandler } from "@sveltejs/kit";
+import { error, json, type RequestHandler } from "@sveltejs/kit";
 
-export const POST: RequestHandler = async () => {
-  const token = GITHUB_TOKEN;
+export const POST: RequestHandler = async ({ request }) => {
+  const { token } = await request.json();
+
+  if (!token) {
+    throw error(500, { id: "UNKNOWN", message: "Token not found" });
+  }
+
   const githubRepoIntegration = (new GithubIntegrationFactory(token))
     .createRepoIntegration();
   const githubUserIntegration = (new GithubIntegrationFactory(token))
