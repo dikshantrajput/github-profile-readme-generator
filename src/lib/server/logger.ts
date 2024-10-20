@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { SERVER_LOG_LEVEL } from '$env/static/private';
 import pino from 'pino';
@@ -8,7 +9,7 @@ const stream = pretty({
     colorize: true,
 });
 
-let options: pino.LoggerOptions = {
+const options: pino.LoggerOptions = {
     level: SERVER_LOG_LEVEL || 'debug',
 };
 
