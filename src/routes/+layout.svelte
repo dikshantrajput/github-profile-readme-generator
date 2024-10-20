@@ -50,8 +50,8 @@
     isLogoutInProgress = true;
 
     return ({ update }) => {
-    isLogoutInProgress = false;
-    update();
+      isLogoutInProgress = false;
+      update();
     };
   };
 </script>
