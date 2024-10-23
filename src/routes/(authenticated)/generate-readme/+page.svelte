@@ -1,40 +1,44 @@
 <script lang="ts">
     import Button from "$lib/components/Button.svelte";
+    import TemplateSelector from "$lib/components/TemplateSelector.svelte";
     import { githubTokenStore } from "$lib/stores/githubToken";
+    import { templates } from "$lib/templates";
     import { marked } from "marked";
     import { scale } from "svelte/transition";
 
     export let markdown = ``;
 
-    const generateTemplate = async () => {
+    const generateTemplate = async (templateId: number) => {
+        if (!templateId) {
+            alert("Template not selected");
+            return;
+        }
+
         if (!$githubTokenStore) {
             alert("Token not found");
             return;
         }
 
         isGenerating = true;
-        const response = await fetch(
-            `/api/generate`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ token: $githubTokenStore }),
+        const response = await fetch(`/api/generate`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             },
-        );
+            body: JSON.stringify({ token: $githubTokenStore, templateId }),
+        });
 
-        if(!response.ok){
-            alert((await response.json())?.message)
-        }else{
+        if (!response.ok) {
+            alert((await response.json())?.message);
+        } else {
             const templateResponse = (await response.json()) as {
                 message: string;
                 template: string;
             };
-    
+
+            showTemplateSelector = false;
             markdown = templateResponse.template;
         }
-
 
         isGenerating = false;
     };
@@ -44,6 +48,8 @@
         isCopying = false;
     let previewContent;
     $: editableContent = markdown;
+
+    let showTemplateSelector = false;
 
     function toggleEdit() {
         isEditing = !isEditing;
@@ -70,13 +76,20 @@
 
     // Parse markdown whenever content changes
     $: previewContent = marked(markdown);
+
+    const handleTemplateSelect = (event: CustomEvent<{ id: number }>) => {
+        const templateId = event.detail.id;
+        generateTemplate(templateId)
+    };
 </script>
 
 {#if $githubTokenStore}
     <Button
         loading={isGenerating}
         disabled={isGenerating}
-        on:click={generateTemplate}>Generate Profile Readme</Button
+        on:click={() => {
+            showTemplateSelector = true;
+        }}>Generate Profile Readme</Button
     >
 {:else}
     No token found. please logout and login
@@ -121,6 +134,13 @@
         </div>
     </div>
 {/if}
+
+<TemplateSelector
+    bind:show={showTemplateSelector}
+    {templates}
+    on:select={handleTemplateSelect}
+    {isGenerating}
+/>
 
 <style>
     /* GitHub Markdown Styles */

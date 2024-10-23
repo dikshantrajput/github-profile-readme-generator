@@ -1,19 +1,24 @@
-import { createEnhancedUserProfileTemplate } from "$lib/readme-templates/template1";
 import GithubIntegrationFactory from "$lib/server/integrations/git/github/github.factory";
+import { templates } from "$lib/templates";
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 
 export const POST: RequestHandler = async ({ request }) => {
-  const { token } = await request.json();
+  const { token, templateId } = await request.json();
 
-  if (!token) {
-    throw error(500, { id: "UNKNOWN", message: "Token not found" });
+  if (!token || !templateId) {
+    throw error(500, { id: "INVALID_PAYLOAD", message: "Token not found" });
   }
 
   const githubRepoIntegration = (new GithubIntegrationFactory(token))
     .createRepoIntegration();
   const githubUserIntegration = (new GithubIntegrationFactory(token))
     .createUserIntegration();
-  const template = await createEnhancedUserProfileTemplate(
+
+  const templateGeneratorFn = templates.find((t) => t.id === templateId)?.fn;
+  if (!templateGeneratorFn) {
+    throw error(500, { id: "INVALID_TEMPLATE", message: "Invalid template" });
+  }
+  const template = await templateGeneratorFn(
     githubUserIntegration,
     githubRepoIntegration,
   );

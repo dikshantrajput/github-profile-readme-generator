@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  GitHubRepoIntegration,
-  GithubUserIntegration,
-} from "$lib/server/integrations/git/github/github.service";
+import type { IGitRepoIntegration, IGitUserIntegration } from "$lib/types/core";
 
 async function createEnhancedUserProfileTemplate(
-  githubUserIntegration: GithubUserIntegration,
-  githubRepoIntegration: GitHubRepoIntegration,
+  githubUserIntegration: IGitUserIntegration,
+  githubRepoIntegration: IGitRepoIntegration,
 ): Promise<string> {
   try {
     const userProfile = await githubUserIntegration.getUserProfile();
