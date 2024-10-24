@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IGitRepoIntegration, IGitUserIntegration } from "$lib/types/core";
 
 async function createGlassNeonTemplate(
@@ -10,7 +11,6 @@ async function createGlassNeonTemplate(
 
     // Advanced stats calculations
     const totalStars = repos.reduce((sum: any, repo: any) => sum + repo.stargazers_count, 0);
-    const totalForks = repos.reduce((sum: any, repo: any) => sum + repo.forks_count, 0);
     
     // Calculate technology expertise
     const languageStats = repos.reduce((acc: any, repo: any) => {
@@ -31,10 +31,11 @@ async function createGlassNeonTemplate(
 
 <div align="center">
   <a href="${userProfile.html_url}">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=4000&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=${encodeURIComponent(`Hello World 👋;I'm ${userProfile.name || userProfile.login};${userProfile.bio || ''};${repos.length}+ Public Repositories;${totalStars}+ Total Stars`)}" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=4000&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=${encodeURIComponent(`Hello World 👋;I'm ${userProfile.name || userProfile.login}; ${userProfile.bio || ''};${repos.length}+ Public Repositories;${totalStars}+ Total Stars`)}" alt="Typing SVG" />
   </a>
 </div>
 
+<br>
 <br>
 
 <div align="center">
@@ -50,24 +51,28 @@ async function createGlassNeonTemplate(
   </table>
 </div>
 
+<br>
+<br>
+
 <div align="center">
   <h2>
     <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="30px" height="30px">
     Featured Projects
   </h2>
   <br>
-  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+  <div align="center">
     ${repos
       .sort((a: any, b: any) => b.stargazers_count - a.stargazers_count)
-      .slice(0, 4)
+      .slice(0, 6)
       .map((repo: any) => `
-        <a href="${repo.html_url}">
+<a href="${repo.html_url}">
           <img src="https://github-readme-stats.vercel.app/api/pin/?username=${userProfile.login}&repo=${repo.name}&theme=radical&bg_color=0D1117&hide_border=true&border_radius=15&title_color=00F7FF&icon_color=00F7FF" />
         </a>
       `).join('\n')}
   </div>
 </div>
 
+<br>
 <br>
 
 <div align="center">
@@ -89,11 +94,12 @@ async function createGlassNeonTemplate(
   <br>
   <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
     ${topLanguages.map(([lang]) => `
-      <img src="https://img.shields.io/badge/${encodeURIComponent(lang)}-Expert-00F7FF?style=for-the-badge&logo=${encodeURIComponent(lang.toLowerCase())}&logoColor=white&labelColor=0D1117" />
+<img src="https://img.shields.io/badge/${encodeURIComponent(lang)}-Expert-00F7FF?style=for-the-badge&logo=${encodeURIComponent(lang.toLowerCase())}&logoColor=white&labelColor=0D1117" />
     `).join('\n')}
   </div>
 </div>
 
+<br>
 <br>
 
 <div align="center">
@@ -113,7 +119,7 @@ async function createGlassNeonTemplate(
         <img src="https://img.shields.io/badge/Website-00F7FF?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=0D1117" />
       </a>` : ''
     }
-    <a href="${userProfile.html_url}">
+<a href="${userProfile.html_url}">
       <img src="https://img.shields.io/badge/GitHub-00F7FF?style=for-the-badge&logo=github&logoColor=white&labelColor=0D1117" />
     </a>
     ${userProfile.email ?
@@ -125,17 +131,20 @@ async function createGlassNeonTemplate(
 </div>
 
 <br>
+<br>
 
 <div align="center">
   <img src="https://github-profile-trophy.vercel.app/?username=${userProfile.login}&theme=radical&no-frame=true&no-bg=true&column=7&title_color=00F7FF" />
 </div>
 
 <br>
+<br>
 
 <div align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=${userProfile.login}&bg_color=0D1117&color=00F7FF&line=FF00FF&point=FFFFFF&area=true&hide_border=true&custom_title=Contribution%20Graph" width="100%" />
 </div>
 
+<br>
 <br>
 
 <div align="center">

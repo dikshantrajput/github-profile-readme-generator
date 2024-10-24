@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IGitRepoIntegration, IGitUserIntegration } from "$lib/types/core";
 
 async function createRPGDevProfile(
@@ -47,23 +48,23 @@ async function createRPGDevProfile(
 </div>
 
 <br>
+<br>
 
 <!-- Skill Tree -->
 <div align="center">
   <h2>
     🎮 SKILL TREE 🎮
   </h2>
-  <div style="background: rgba(13, 17, 23, 0.8); padding: 20px; border-radius: 15px; margin: 10px;">
+  <div style="background: rgba(13, 17, 23, 0.8); padding: 20px; border-radius: 15px; margin: 10px; display:flex; flex-wrap: wrap; gap: 10px">
     ${topSkills.map(([lang, xp]) => `
-      <div style="margin: 10px;">
+<div style="margin: 10px;">
         <img src="https://img.shields.io/badge/${encodeURIComponent(lang)}-${Math.floor(Math.log2(xp as number) + 1)}%20LVL-FF5733?style=for-the-badge&logo=${encodeURIComponent(lang.toLowerCase())}&logoColor=white&labelColor=0D1117" />
-        <br>
-        <img src="https://progress-bar.dev/${Math.min(Math.floor((xp as number) / 100), 100)}/?width=400&color=FF5733" />
       </div>
     `).join('\n')}
   </div>
 </div>
 
+<br>
 <br>
 
 <!-- Inventory (Projects) -->
@@ -71,18 +72,19 @@ async function createRPGDevProfile(
   <h2>
     🎲 INVENTORY (Featured Projects) 🎲
   </h2>
-  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+<div align="center">
     ${repos
       .sort((a: any, b: any) => b.stargazers_count - a.stargazers_count)
-      .slice(0, 4)
+      .slice(0, 6)
       .map((repo: any) => `
-        <a href="${repo.html_url}">
+<a href="${repo.html_url}">
           <img src="https://github-readme-stats.vercel.app/api/pin/?username=${userProfile.login}&repo=${repo.name}&theme=gruvbox&hide_border=true&title_color=FF5733&icon_color=FFB74D&text_color=FFFFFF&bg_color=0D1117" />
         </a>
     `).join('\n')}
   </div>
 </div>
 
+<br>
 <br>
 
 <!-- Achievement Stats -->
@@ -111,6 +113,7 @@ async function createRPGDevProfile(
 </div>
 
 <br>
+<br>
 
 <!-- Party Members (Social Links) -->
 <div align="center">
@@ -128,7 +131,7 @@ async function createRPGDevProfile(
         <img src="https://img.shields.io/badge/Website-VISIT-FF5733?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=0D1117" />
       </a>` : ''
     }
-    <a href="${userProfile.html_url}">
+<a href="${userProfile.html_url}">
       <img src="https://img.shields.io/badge/GitHub-FOLLOW-FF5733?style=for-the-badge&logo=github&logoColor=white&labelColor=0D1117" />
     </a>
     ${userProfile.email ?
@@ -139,6 +142,7 @@ async function createRPGDevProfile(
   </div>
 </div>
 
+<br>
 <br>
 
 <!-- Trophy Room -->
@@ -152,7 +156,7 @@ async function createRPGDevProfile(
 <br>
 
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,29&height=100&section=footer" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,29&height=100&section=footer" width="100% />
 </div>
 `;
 
