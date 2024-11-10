@@ -9,6 +9,7 @@
   export let loading = false;
   export let fullWidth = false;
   export let animate = true;
+  export let customClasses = "";
 
   const dispatch = createEventDispatcher();
 
@@ -37,7 +38,7 @@
 
 <button
   {type}
-  class={classes}
+  class={`${classes} ${customClasses}`}
   on:click={handleClick}
   {disabled}
   aria-disabled={disabled || loading}

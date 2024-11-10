@@ -45,3 +45,7 @@
     --color-warning: 249 115 22;
   }
 }
+
+html{
+  scroll-behavior: smooth;
+}

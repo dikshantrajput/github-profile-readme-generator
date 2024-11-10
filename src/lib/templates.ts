@@ -17,11 +17,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Minimalist Masterpiece",
     description:
       "A clean and straightforward README template that highlights your projects and skills without any distractions.",
-    preview: `# Changelog
-  ## [Unreleased]
-  ## [1.0.0]
-  ## [0.9.0]
-  ## Migration Guide`,
+    preview: ``,
     icon: "📝",
     fn: createEnhancedUserProfileTemplate,
   },
@@ -30,12 +26,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Matrix Profile",
     description:
       "Generates a matrix-style GitHub profile overview with developer statistics, repository data, and visual elements.",
-    preview: `# Project Name
-  [![Stars](https://img.shields.io/github/stars/username/repo)]()
-  ## Features
-  ## Installation
-  ## Documentation
-  ## Contributing`,
+    preview: ``,
     icon: "⭐",
     fn: createMatrixProfileTemplate,
   },
@@ -44,10 +35,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "DevOps Profile Generator",
     description:
       "Create a dynamic and detailed DevOps profile, showcasing your GitHub contributions, infrastructure metrics, technology stack, and deployment insights—all in a visually engaging template.",
-    preview: `# Project
-  Description
-  ## Quick Start
-  ## License`,
+    preview: ``,
     icon: "🎯",
     fn: createDevOpsProfile,
   },
@@ -56,11 +44,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Trading Dashboard",
     description:
       "Generates a trading dashboard-inspired GitHub profile template, including repository metrics, language portfolio, top repositories, and personalized developer statistics.",
-    preview: `# Product Name
-  ## Features
-  ## Screenshots
-  ## Installation
-  ## Feedback`,
+    preview: ``,
     icon: "🎨",
     fn: createTradingDashboardTemplate,
   },
@@ -69,11 +53,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Developer's Cookbook Template",
     description:
       'Showcase your GitHub profile as a fun, culinary-inspired "Developer\'s Cookbook" highlighting your top repositories, languages, and contributions as signature dishes and ingredients.',
-    preview: `# Hi 👋, I'm [Your Name]
-  🔭 I'm currently working on...
-  🌱 I'm currently learning...
-  👯 I'm looking to collaborate on...
-  📫 How to reach me...`,
+    preview: ``,
     icon: "👨‍💻",
     fn: createDevelopersCookbookTemplate,
   },
@@ -82,11 +62,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Quest Log",
     description:
       "Level up your GitHub profile with this RPG-inspired README template, perfect for showcasing your coding adventures and achievements.",
-    preview: `# Project
-  ## Contributing
-  ## Code of Conduct
-  ## Development
-  ## Community`,
+    preview: ``,
     icon: "🌟",
     fn: createRPGDevProfile,
   },
@@ -95,11 +71,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "My Developer's Journey Map",
     description:
       "Personalized, visual journey of your GitHub contributions, projects, and achievements, highlighting your coding milestones, language expertise, and project stats in an interactive and engaging format.",
-    preview: `# Project Documentation
-  ## API Reference
-  ## Configuration
-  ## Examples
-  ## Troubleshooting`,
+    preview: ``,
     icon: "📚",
     fn: createDevelopersJourneyTemplate,
   },
@@ -108,11 +80,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Neon Synthwave",
     description:
       "Creates a neon synthwave-themed GitHub profile template showcasing user stats, featured projects, and a visually striking retro design.",
-    preview: `# CLI Tool
-  ## Commands
-  ## Options
-  ## Examples
-  ## Configuration`,
+    preview: ``,
     icon: "⌨️",
     fn: createNeonSynthwaveTemplate,
   },
@@ -121,11 +89,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Research Paper",
     description:
       "Creates a research-paper formatted template analyzing a GitHub user's repository statistics and contributions.",
-    preview: `# Organization Name
-  ## About Us
-  ## Projects
-  ## Contributing
-  ## Contact`,
+    preview: ``,
     icon: "🏢",
     fn: createResearchPaperTemplate,
   },
@@ -134,11 +98,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Neon Reflections",
     description:
       "A vibrant README template that combines glassy aesthetics and neon colors to create a visually striking profile.",
-    preview: `# Research Project
-  ## Abstract
-  ## Methodology
-  ## Results
-  ## Citations`,
+    preview: ``,
     icon: "🎓",
     fn: createGlassNeonTemplate,
   },
@@ -147,12 +107,7 @@ export const templates: GithubTemplateInterface[] = [
     title: "Developer Sports Card",
     description:
       "Personalized sports card highlighting your GitHub profile, showcasing key stats, top repositories, and skill insights in a fun and engaging way.",
-    preview: `# Project Name
-  ## Description
-  ## Installation
-  ## Usage
-  ## Contributing
-  ## License`,
+    preview: ``,
     icon: "📦",
     fn: createSportsCardTemplate,
   },

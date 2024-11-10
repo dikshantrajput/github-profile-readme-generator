@@ -15,9 +15,9 @@ import {
 } from "@supabase/supabase-js";
 import type { Cookies } from "@sveltejs/kit";
 
-const SupabaseDatabaseConfig: SupabaseClientOptions<"flow"> = {
+const SupabaseDatabaseConfig: SupabaseClientOptions<"private"> = {
     db: {
-        schema: "flow",
+        schema: "private",
     },
 };
 
@@ -64,8 +64,8 @@ export const getSupabaseServerClient = (cookies: Cookies): SupabaseClient => {
 
 export const getSupabaseBrowserClient = (): SupabaseClient => {
     return createBrowserClient(
-        NEXT_PUBLIC_SUPABASE_URL!,
-        NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        PUBLIC_SUPABASE_URL!,
+        PUBLIC_SUPABASE_ANON_KEY!,
     );
 };
 

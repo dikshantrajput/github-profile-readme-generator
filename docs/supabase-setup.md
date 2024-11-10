@@ -10,7 +10,7 @@
 - Go to API section 
 - Copy url and paste it in `.env` file `PUBLIC_SUPABASE_URL` variable
 - Copy anon/ public key and paste it in `.env` file `PUBLIC_SUPABASE_ANON_KEY` variable
-- Copy service key and paste it in `.env` file `PUBLIC_SUPABASE_SERVICE_KEY` variable
+- Copy service key and paste it in `.env` file `SUPABASE_SERVICE_KEY` variable
 - Scroll down and find the Data API settings
 - Add `base` to exposed schema list and extra search path
 - Save the settings

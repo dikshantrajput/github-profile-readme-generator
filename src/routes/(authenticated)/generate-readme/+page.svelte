@@ -1,8 +1,10 @@
 <script lang="ts">
+    import { enhance } from "$app/forms";
     import Button from "$lib/components/Button.svelte";
     import TemplateSelector from "$lib/components/TemplateSelector.svelte";
     import { githubTokenStore } from "$lib/stores/githubToken";
     import { templates } from "$lib/templates";
+    import type { SubmitFunction } from "@sveltejs/kit";
     import { marked } from "marked";
     import { scale } from "svelte/transition";
 
@@ -79,7 +81,18 @@
 
     const handleTemplateSelect = (event: CustomEvent<{ id: number }>) => {
         const templateId = event.detail.id;
-        generateTemplate(templateId)
+        generateTemplate(templateId);
+    };
+
+    let isSigningOut = false;
+    
+    const handleSignOut: SubmitFunction = () => {
+        isSigningOut = true;
+
+        return ({ update, result }) => {
+            isSigningOut = false;
+            update();
+        };
     };
 </script>
 
@@ -91,6 +104,14 @@
             showTemplateSelector = true;
         }}>Generate Profile Readme</Button
     >
+
+    <form
+        action="/logout"
+        method="post"
+        use:enhance={handleSignOut}
+    >
+        <Button type="submit" loading={isSigningOut} disabled={isSigningOut}>Logout</Button>
+    </form>
 {:else}
     No token found. please logout and login
 {/if}

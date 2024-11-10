@@ -22,9 +22,6 @@ async function createTradingDashboardTemplate(
       return acc;
     }, {});
 
-    console.log(languageStats);
-    
-
     const totalRepos = repos.length;
     const languagePortfolio = Object.entries(languageStats)
       .map(([lang, count]) => ({
