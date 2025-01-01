@@ -149,7 +149,6 @@
 </script>
 
 <div class="min-h-screen bg-background text-text">
-    <!-- Navbar with glass effect -->
     <nav
         class="sticky top-0 z-50 backdrop-blur-lg bg-background/70 border-b border-primary/10"
     >
@@ -397,39 +396,57 @@
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="py-24 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-6">
-                Ready to Create Your Profile?
-            </h2>
-            <p class="text-text-muted mb-8 max-w-2xl mx-auto">
-                Join thousands of developers who have already enhanced their
-                GitHub presence.
-            </p>
-            <form
-                action="/auth?/signinWithGithubOAuth"
-                method="post"
-                use:enhance={handleSignIn}
+    <section class="relative overflow-hidden py-44">
+        {#if heroVisible}
+            <div
+                class="container mx-auto px-6"
+                in:fade={{ duration: 1000, delay: 200 }}
             >
-                <Button
-                    type="submit"
-                    disabled={isSigningIn}
-                    loading={isSigningIn}
-                    variant="primary"
-                >
-                    Get Started Now
-                </Button>
-            </form>
-        </div>
+                <div class="relative">
+                    <!-- Gradient Orbs -->
+                    <div
+                        class="absolute top-0 -left-4 w-72 h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
+                    />
+                    <div
+                        class="absolute top-0 -right-4 w-72 h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
+                    />
+                    <div
+                        class="absolute -bottom-8 left-20 w-72 h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
+                    />
+
+                    <div class="container mx-auto px-6 text-center">
+                        <h2 class="text-4xl font-bold mb-6">
+                            Ready to Create Your Profile?
+                        </h2>
+                        <p class="text-text-muted mb-8 max-w-2xl mx-auto">
+                            Enhance your GitHub presence now.
+                        </p>
+                        <form
+                            action="/auth?/signinWithGithubOAuth"
+                            method="post"
+                            use:enhance={handleSignIn}
+                        >
+                            <Button
+                                type="submit"
+                                disabled={isSigningIn}
+                                loading={isSigningIn}
+                                variant="primary"
+                            >
+                                Get Started Now
+                            </Button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {/if}
     </section>
 
     <!-- Footer -->
     <footer
         class="bg-background-light dark:bg-background-dark border-t border-primary/10"
     >
-        <div class="container mx-auto px-6 py-12">
-            <div class="grid md:grid-cols-4 gap-8">
+        <div class="container mx-auto">
+            <!-- <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4">ReadmeGen</h3>
                     <p class="text-text-muted">
@@ -518,15 +535,15 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
 
             <div
-                class="mt-12 pt-8 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center"
+                class="py-8 border-t border-primary/10 flex flex-col md:flex-row justify-center items-center"
             >
                 <p class="text-text-muted">
                     © 2024 ReadmeGen. All rights reserved.
                 </p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
+                <!-- <div class="flex space-x-6 mt-4 md:mt-0">
                     <a
                         href="#terms"
                         class="text-text-muted hover:text-primary transition-colors"
@@ -542,7 +559,7 @@
                         class="text-text-muted hover:text-primary transition-colors"
                         >Cookies</a
                     >
-                </div>
+                </div> -->
             </div>
         </div>
     </footer>
