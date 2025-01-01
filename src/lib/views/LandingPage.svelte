@@ -397,48 +397,46 @@
     </section>
 
     <section class="relative overflow-hidden py-44">
-        {#if heroVisible}
-            <div
-                class="container mx-auto px-6"
-                in:fade={{ duration: 1000, delay: 200 }}
-            >
-                <div class="relative">
-                    <!-- Gradient Orbs -->
-                    <div
-                        class="absolute top-0 -left-4 w-72 h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
-                    />
-                    <div
-                        class="absolute top-0 -right-4 w-72 h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
-                    />
-                    <div
-                        class="absolute -bottom-8 left-20 w-72 h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
-                    />
+        <div
+            class="container mx-auto px-6"
+            in:fade={{ duration: 1000, delay: 200 }}
+        >
+            <div class="relative">
+                <!-- Gradient Orbs -->
+                <div
+                    class="absolute top-0 -left-4 w-72 h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
+                />
+                <div
+                    class="absolute top-0 -right-4 w-72 h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
+                />
+                <div
+                    class="absolute -bottom-8 left-20 w-72 h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
+                />
 
-                    <div class="container mx-auto px-6 text-center">
-                        <h2 class="text-4xl font-bold mb-6">
-                            Ready to Create Your Profile?
-                        </h2>
-                        <p class="text-text-muted mb-8 max-w-2xl mx-auto">
-                            Enhance your GitHub presence now.
-                        </p>
-                        <form
-                            action="/auth?/signinWithGithubOAuth"
-                            method="post"
-                            use:enhance={handleSignIn}
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-4xl font-bold mb-6">
+                        Ready to Create Your Profile?
+                    </h2>
+                    <p class="text-text-muted mb-8 max-w-2xl mx-auto">
+                        Enhance your GitHub presence now.
+                    </p>
+                    <form
+                        action="/auth?/signinWithGithubOAuth"
+                        method="post"
+                        use:enhance={handleSignIn}
+                    >
+                        <Button
+                            type="submit"
+                            disabled={isSigningIn}
+                            loading={isSigningIn}
+                            variant="primary"
                         >
-                            <Button
-                                type="submit"
-                                disabled={isSigningIn}
-                                loading={isSigningIn}
-                                variant="primary"
-                            >
-                                Get Started Now
-                            </Button>
-                        </form>
-                    </div>
+                            Get Started Now
+                        </Button>
+                    </form>
                 </div>
             </div>
-        {/if}
+        </div>
     </section>
 
     <!-- Footer -->
