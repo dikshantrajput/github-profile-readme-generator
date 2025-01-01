@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { fade, fly, scale, slide } from "svelte/transition";
+    import { fade, fly, slide } from "svelte/transition";
     import { cubicOut } from "svelte/easing";
     import { tweened } from "svelte/motion";
     import Button from "$lib/components/Button.svelte";
@@ -10,7 +10,6 @@
     let heroVisible = true;
     let featuresVisible = true;
 
-    // Animated counter for stats
     const stars = tweened(0, {
         duration: 2000,
         easing: cubicOut,
@@ -46,7 +45,6 @@
         },
     ];
 
-    // Templates data from your provided list
     const allTemplates = [
         {
             id: 1,
@@ -146,91 +144,132 @@
         viewAllTemplates = !viewAllTemplates;
         templates = viewAllTemplates ? allTemplates : allTemplates.slice(0, 4);
     };
+
+    let isMenuOpen = false;
+    const toggleMenu = () => {
+        isMenuOpen = !isMenuOpen;
+    };
 </script>
 
 <div class="min-h-screen bg-background text-text">
+    <script>
+        let isMenuOpen = false;
+        const toggleMenu = () => {
+            isMenuOpen = !isMenuOpen;
+        };
+    </script>
+
     <nav
         class="sticky top-0 z-50 backdrop-blur-lg bg-background/70 border-b border-primary/10"
     >
-        <div class="container mx-auto px-6">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-8">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-14 sm:h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
                     <span
-                        class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
+                        class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
                     >
                         ReadmeGen
                     </span>
-                    <div class="md:flex space-x-6">
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a
+                        href="#features"
+                        class="text-text-muted hover:text-primary transition-colors"
+                    >
+                        Features
+                    </a>
+                    <a
+                        href="#templates"
+                        class="text-text-muted hover:text-primary transition-colors"
+                    >
+                        Templates
+                    </a>
+                </div>
+
+                <!-- Login Button - Desktop -->
+                <div class="hidden md:block">
+                    <form
+                        action="/auth?/signinWithGithubOAuth"
+                        method="post"
+                        use:enhance={handleSignIn}
+                    >
+                        <Button
+                            type="submit"
+                            disabled={isSigningIn}
+                            loading={isSigningIn}
+                            variant="primary"
+                            customClasses="px-4 py-2 text-sm"
+                        >
+                            Login with GitHub
+                        </Button>
+                    </form>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button
+                    class="md:hidden p-2 rounded-md text-text-muted hover:text-primary"
+                    on:click={toggleMenu}
+                    aria-label="Toggle menu"
+                >
+                    {#if !isMenuOpen}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            />
+                        </svg>
+                    {:else}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    {/if}
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            {#if isMenuOpen}
+                <div
+                    class="md:hidden py-4 border-t border-primary/10"
+                    transition:slide
+                >
+                    <div class="flex flex-col space-y-4">
                         <a
                             href="#features"
-                            class="text-text-muted hover:text-primary transition-colors"
-                            >Features</a
+                            class="text-text-muted hover:text-primary transition-colors px-4"
+                            on:click={toggleMenu}
                         >
+                            Features
+                        </a>
                         <a
                             href="#templates"
-                            class="text-text-muted hover:text-primary transition-colors"
-                            >Templates</a
+                            class="text-text-muted hover:text-primary transition-colors px-4"
+                            on:click={toggleMenu}
                         >
-                    </div>
-                </div>
-                <form
-                    action="/auth?/signinWithGithubOAuth"
-                    method="post"
-                    use:enhance={handleSignIn}
-                >
-                    <Button
-                        type="submit"
-                        disabled={isSigningIn}
-                        loading={isSigningIn}
-                        variant="primary"
-                    >
-                        Login with GitHub
-                    </Button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="relative overflow-hidden pt-20 pb-32">
-        {#if heroVisible}
-            <div
-                class="container mx-auto px-6"
-                in:fade={{ duration: 1000, delay: 200 }}
-            >
-                <div class="relative">
-                    <!-- Gradient Orbs -->
-                    <div
-                        class="absolute top-0 -left-4 w-72 h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
-                    />
-                    <div
-                        class="absolute top-0 -right-4 w-72 h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
-                    />
-                    <div
-                        class="absolute -bottom-8 left-20 w-72 h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
-                    />
-
-                    <div class="relative text-center max-w-4xl mx-auto">
-                        <h1
-                            class="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent"
-                            in:fly={{ y: 50, duration: 1000, delay: 400 }}
-                        >
-                            Make Your GitHub Profile Stand Out
-                        </h1>
-                        <p
-                            class="text-xl text-text-muted mb-12"
-                            in:fly={{ y: 50, duration: 1000, delay: 600 }}
-                        >
-                            Create a professional GitHub profile README in
-                            minutes with our intuitive generator. Choose from
-                            beautiful templates and customize them to match your
-                            style.
-                        </p>
-
-                        <div
-                            class="flex flex-col sm:flex-row gap-4 justify-center"
-                            in:fly={{ y: 50, duration: 1000, delay: 800 }}
-                        >
+                            Templates
+                        </a>
+                        <div class="px-4">
                             <form
                                 action="/auth?/signinWithGithubOAuth"
                                 method="post"
@@ -241,41 +280,117 @@
                                     disabled={isSigningIn}
                                     loading={isSigningIn}
                                     variant="primary"
-                                    customClasses="px-8 py-4 bg-primary hover:bg-primary-dark text-white rounded-lg transition-all duration-200 ease-in-out hover:scale-105 shadow-lg hover:shadow-primary/20"
+                                    customClasses="w-full py-2 text-sm"
+                                >
+                                    Login with GitHub
+                                </Button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+        id="hero"
+        class="relative overflow-hidden pt-12 md:pt-20 pb-16 md:pb-32"
+    >
+        {#if heroVisible}
+            <div
+                class="container mx-auto px-4 sm:px-6"
+                in:fade={{ duration: 1000, delay: 200 }}
+            >
+                <div class="relative">
+                    <!-- Gradient Orbs - Adjusted for better mobile display -->
+                    <div
+                        class="absolute top-0 -left-4 w-48 h-48 md:w-72 md:h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
+                    />
+                    <div
+                        class="absolute top-0 -right-4 w-48 h-48 md:w-72 md:h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
+                    />
+                    <div
+                        class="absolute -bottom-8 left-20 w-48 h-48 md:w-72 md:h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
+                    />
+
+                    <div
+                        class="relative text-center max-w-4xl mx-auto px-4 sm:px-6"
+                    >
+                        <h1
+                            class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent"
+                            in:fly={{ y: 50, duration: 1000, delay: 400 }}
+                        >
+                            Make Your GitHub Profile Stand Out
+                        </h1>
+                        <p
+                            class="text-lg sm:text-xl text-text-muted mb-8 md:mb-12 px-2"
+                            in:fly={{ y: 50, duration: 1000, delay: 600 }}
+                        >
+                            Create a professional GitHub profile README in
+                            minutes with our intuitive generator. Choose from
+                            beautiful templates and customize them to match your
+                            style.
+                        </p>
+
+                        <div
+                            class="flex flex-col sm:flex-row gap-4 justify-center px-4"
+                            in:fly={{ y: 50, duration: 1000, delay: 800 }}
+                        >
+                            <form
+                                action="/auth?/signinWithGithubOAuth"
+                                method="post"
+                                use:enhance={handleSignIn}
+                                class="w-full sm:w-auto"
+                            >
+                                <Button
+                                    type="submit"
+                                    disabled={isSigningIn}
+                                    loading={isSigningIn}
+                                    variant="primary"
+                                    customClasses="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary-dark text-white rounded-lg transition-all duration-200 ease-in-out sm:hover:scale-105 hover:scale-101 shadow-lg hover:shadow-primary/20"
                                 >
                                     Generate README
                                 </Button>
                             </form>
                             <button
-                                class="px-8 py-4 border-2 border-primary/20 hover:border-primary rounded-lg transition-all duration-200 ease-in-out hover:scale-105"
+                                class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-primary/20 hover:border-primary rounded-lg transition-all duration-200 ease-in-out sm:hover:scale-105 hover:scale-101"
                             >
                                 View Examples
                             </button>
                         </div>
 
                         <div
-                            class="mt-16 grid grid-cols-2 gap-8 max-w-lg mx-auto hidden"
+                            class="mt-12 md:mt-16 grid grid-cols-2 gap-4 sm:gap-8 max-w-lg mx-auto hidden"
                             in:fly={{ y: 50, duration: 1000, delay: 1000 }}
                         >
                             <div class="text-center">
                                 <div
-                                    class="text-4xl font-bold text-primary mb-2"
+                                    class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-2"
                                 >
                                     {#if heroVisible}
                                         {$stars.toFixed(0)}+
                                     {/if}
                                 </div>
-                                <div class="text-text-muted">GitHub Stars</div>
+                                <div
+                                    class="text-sm sm:text-base text-text-muted"
+                                >
+                                    GitHub Stars
+                                </div>
                             </div>
                             <div class="text-center">
                                 <div
-                                    class="text-4xl font-bold text-secondary mb-2"
+                                    class="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary mb-2"
                                 >
                                     {#if heroVisible}
                                         {$users.toFixed(0)}+
                                     {/if}
                                 </div>
-                                <div class="text-text-muted">Active Users</div>
+                                <div
+                                    class="text-sm sm:text-base text-text-muted"
+                                >
+                                    Active Users
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -304,11 +419,11 @@
                     README that stands out from the crowd.
                 </p>
 
-                <div class="grid md:grid-cols-3 gap-8">
+                <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-8">
                     {#each featuresData as feature, i}
                         <div
                             in:fly={{ y: 50, duration: 1000, delay: 200 * i }}
-                            class="group relative p-8 rounded-xl bg-background shadow-lg dark:shadow-none border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
+                            class="group relative p-8 rounded-xl bg-background shadow-lg dark:shadow-none border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 min-w-[300px]"
                         >
                             <div
                                 class="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -319,10 +434,10 @@
                                 >
                                     {@html feature.icon}
                                 </div>
-                                <h3 class="text-xl font-bold mb-4">
+                                <h3 class="sm:text-xl text-lg font-bold mb-4">
                                     {feature.title}
                                 </h3>
-                                <p class="text-text-muted">
+                                <p class="text-text-muted sm:text-lg text-sm">
                                     {feature.description}
                                 </p>
                             </div>
@@ -334,20 +449,21 @@
     </section>
 
     <section
-        class="py-32 bg-background relative overflow-hidden"
+        class="py-16 sm:py-24 md:py-32 bg-background relative overflow-hidden"
         id="templates"
     >
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-6">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 sm:mb-6">
                 Choose Your Style
             </h2>
-            <p class="text-center text-text-muted mb-16 max-w-2xl mx-auto">
+            <p
+                class="text-center text-text-muted mb-8 sm:mb-16 max-w-2xl mx-auto px-4"
+            >
                 From minimalist to gaming-inspired, find the perfect template
                 that matches your personality.
             </p>
-
             <form
-                class="flex gap-8 flex-wrap justify-center items-stretch"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6"
                 action="/auth?/signinWithGithubOAuth"
                 method="post"
                 use:enhance={handleSignIn}
@@ -359,17 +475,19 @@
                             duration: 400,
                             delay: 50 * template.id,
                         }}
-                        class="w-1/5"
+                        class="w-full"
                     >
                         <Button
                             type="submit"
                             disabled={isSigningIn}
                             loading={isSigningIn}
-                            customClasses="h-full group relative !p-6 rounded-xl bg-background-light dark:bg-background-dark border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 cursor-pointer !block"
+                            customClasses="h-full group relative !p-6 rounded-xl bg-background-light dark:bg-background-dark border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 cursor-pointer !block "
                             variant="primary"
                         >
-                            <div class="text-4xl mb-4">{template.icon}</div>
-                            <h3 class="text-xl font-bold mb-2">
+                            <div class="text-3xl sm:text-4xl mb-3 sm:mb-4">
+                                {template.icon}
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold mb-2">
                                 {template.title}
                             </h3>
                             <p class="text-sm text-text-muted line-clamp-2">
@@ -382,11 +500,10 @@
                     </div>
                 {/each}
             </form>
-
             {#if !viewAllTemplates}
-                <div class="text-center mt-12">
+                <div class="text-center mt-8 sm:mt-12">
                     <button
-                        class="px-8 py-4 bg-background-light dark:bg-background-dark border border-primary/20 hover:border-primary rounded-lg transition-all duration-200 hover:-translate-y-1"
+                        class="w-auto px-6 sm:px-8 py-4 bg-background-light dark:bg-background-dark border border-primary/20 hover:border-primary rounded-lg transition-all duration-200 hover:-translate-y-1"
                         on:click={toggleAllTemplates}
                     >
                         View All Templates
@@ -396,40 +513,48 @@
         </div>
     </section>
 
-    <section class="relative overflow-hidden py-44">
+    <section class="relative overflow-hidden py-24 sm:py-32 md:py-44">
         <div
-            class="container mx-auto px-6"
+            class="container mx-auto px-4 sm:px-6"
             in:fade={{ duration: 1000, delay: 200 }}
         >
             <div class="relative">
-                <!-- Gradient Orbs -->
+                <!-- Gradient Orbs - Responsive sizes -->
                 <div
-                    class="absolute top-0 -left-4 w-72 h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
+                    class="absolute top-0 -left-4 w-48 h-48 sm:w-64 md:w-72 sm:h-64 md:h-72 bg-primary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
                 />
                 <div
-                    class="absolute top-0 -right-4 w-72 h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
+                    class="absolute top-0 -right-4 w-48 h-48 sm:w-64 md:w-72 sm:h-64 md:h-72 bg-secondary/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
                 />
                 <div
-                    class="absolute -bottom-8 left-20 w-72 h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
+                    class="absolute -bottom-8 left-10 sm:left-20 w-48 h-48 sm:w-64 md:w-72 sm:h-64 md:h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
                 />
 
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-4xl font-bold mb-6">
+                <div
+                    class="container mx-auto px-4 sm:px-6 text-center relative z-10"
+                >
+                    <h2
+                        class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6"
+                    >
                         Ready to Create Your Profile?
                     </h2>
-                    <p class="text-text-muted mb-8 max-w-2xl mx-auto">
+                    <p
+                        class="text-text-muted mb-6 sm:mb-8 max-w-2xl mx-auto px-4"
+                    >
                         Enhance your GitHub presence now.
                     </p>
                     <form
                         action="/auth?/signinWithGithubOAuth"
                         method="post"
                         use:enhance={handleSignIn}
+                        class="flex justify-center"
                     >
                         <Button
                             type="submit"
                             disabled={isSigningIn}
                             loading={isSigningIn}
                             variant="primary"
+                            customClasses="w-auto px-6 sm:px-8 py-3 border border-primary/20 hover:border-primary rounded-lg transition-all duration-200 hover:-translate-y-1 sm:text-base text-sm"
                         >
                             Get Started Now
                         </Button>
@@ -564,7 +689,6 @@
 </div>
 
 <style>
-    /* Blob animation */
     @keyframes blob {
         0% {
             transform: translate(0px, 0px) scale(1);
